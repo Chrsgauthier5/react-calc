@@ -1,28 +1,62 @@
-import React, { Component } from "react";
-import "./App.css";
-import Button from "./Components/Button";
-import Input from "./Components/Input";
-import ClearButton from "./Components/ClearButton";
-import OperatorButton from "./Components/OperatorButton";
+import React, { Component } from 'react';
+import './App.css';
+import Button from './Components/Button';
+import Input from './Components/Input';
+import ClearButton from './Components/ClearButton';
+import OperatorButton from './Components/OperatorButton';
+
+
 
 class App extends Component {
+
   state = {
-    input: "",
-    operand: "",
-    input2: ""
-  };
+    input: '',
+    operand: '',
+    input2: ''
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress)
+  }
+  handleKeyPress = event => {
+    console.log(event)
+    const regex = /^\d+$/;
+    if (regex.test(event.key)) this.addToInput(event.key)
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.code === 'Equal') this.handleOperation(event.key)
+    if (event.code === 'Period') this.handleDecimal(event.key);
+    if (event.code === 'KeyC') this.setState({ input: "", operand: "", input2: "" })
+  }
+
+  handleDecimal = val => {
+    const { input, operand, input2 } = this.state;
+    if (!operand) {
+      if (input.indexOf(val) === -1) this.setState({ input: this.state.input + val })
+    }
+    else if (operand) {
+      if (input2.indexOf(val) === -1) this.setState({ input2: this.state.input2 + val })
+    }
+  }
 
   addToInput = val => {
-    !this.state.operand && !this.state.input
-      ? this.setState({ input: this.state.input + val })
-      : this.setState({ input2: this.state.input2 + val });
+    const { input, operand, input2 } = this.state;
+    (!operand) ? this.setState({ input: this.state.input + val }) : this.setState({ input2: this.state.input2 + val })
   };
 
   handleOperation = operator => {
     const { input, operand, input2 } = this.state;
-    (input && operand && input2) 
-    ? this.doMath(input, input2, operand, operator)
-    : this.setState({ operand: operator });
+
+    (input && operand && input2)
+      ? this.doMath(input, input2, operand, operator)
+      : this.setState({ operand: operator });
+
+    if (!input) this.setState({ input: 0 });
+    if (operator === '=' && input2 === '') {
+      this.setState({ input: this.state.input, operand: '' })
+      return
+    }
+
+
+
   };
 
   doMath(a, b, sign, operator) {
@@ -90,7 +124,7 @@ class App extends Component {
             </OperatorButton>
           </div>
           <div className="row">
-            <Button handleClick={this.addToInput}>.</Button>
+            <Button handleClick={this.handleDecimal}>.</Button>
             <Button handleClick={this.addToInput}>0</Button>
             <OperatorButton handleOperation={this.handleOperation}>
               =
