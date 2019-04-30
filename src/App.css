@@ -4,6 +4,9 @@
   align-items: center;
   height: 100vh;
   width: 100%;
+  background-image: url(../src/calc_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .calc-wrapper {
