@@ -73,7 +73,7 @@ class App extends Component {
           ? this.setState({ input: a - b, operand: "", input2: "" })
           : this.setState({ input: a - b, operand: operator, input2: "" });
         break;
-      case "x":
+      case "*":
         operator === "="
           ? this.setState({ input: a * b, operand: "", input2: "" })
           : this.setState({ input: a * b, operand: operator, input2: "" });
@@ -112,7 +112,7 @@ class App extends Component {
             <Button handleClick={this.addToInput}>5</Button>
             <Button handleClick={this.addToInput}>6</Button>
             <OperatorButton handleOperation={this.handleOperation}>
-              x
+              *
             </OperatorButton>
           </div>
           <div className="row">
@@ -139,7 +139,7 @@ class App extends Component {
                 this.setState({ input: "", operand: "", input2: "" })
               }
             >
-              Clear
+              Clear (c)
             </ClearButton>
           </div>
         </div>
