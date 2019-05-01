@@ -22,7 +22,7 @@ class App extends Component {
     console.log(event)
     const regex = /^\d+$/;
     if (regex.test(event.key)) this.addToInput(event.key)
-    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.code === 'Equal') this.handleOperation(event.key)
+    if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/' || event.code === 'Equal' || event.key === 'Enter') this.handleOperation(event.key)
     if (event.code === 'Period') this.handleDecimal(event.key);
     if (event.code === 'KeyC') this.setState({ input: "", operand: "", input2: "" })
   }
@@ -39,10 +39,12 @@ class App extends Component {
 
   addToInput = val => {
     const { input, operand, input2 } = this.state;
-    (!operand) ? this.setState({ input: this.state.input + val }) : this.setState({ input2: this.state.input2 + val })
+    (!operand) ? this.setState({ input: input + val }) : this.setState({ input2: input2 + val })
   };
 
   handleOperation = operator => {
+    if(operator === "Enter") operator = '=';
+
     const { input, operand, input2 } = this.state;
 
     (input && operand && input2)
