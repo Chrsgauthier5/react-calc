@@ -1,3 +1,7 @@
+---
+permalink: /server.js
+---
+
 A basic calculator built using React.
 
 Includes basic state which manages two inputs as well as an operator to function.
