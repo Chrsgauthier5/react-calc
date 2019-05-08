@@ -1,6 +1,3 @@
----
-permalink: /index.html
----
 
 A basic calculator built using React.
 
